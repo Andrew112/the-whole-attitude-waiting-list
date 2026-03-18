@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Whole Attitude</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ── RESET & ROOT ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --matte:   #f0efed;
+    --matte2:  #e8e7e4;
+    --matte3:  #dddcda;
+    --silver:  #3a3a3a;
+    --silver2: #1e1e1e;
+    --white:   #111111;
+    --accent:  #000000;
+    --dim:     #777;
+    --border:  rgba(0,0,0,0.1);
+    --radius:  4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--matte);
+    color: var(--silver2);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── NOISE GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* ── TOP STATUS BAR ── */
+  .status-bar {
+    background: var(--matte2);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .status-bar .live { color: var(--silver); display: flex; align-items: center; gap: 6px; }
+  .status-bar .live::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: #111;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; } 50% { opacity: 0.2; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .nav-logo span { color: var(--dim); font-size: 11px; letter-spacing: 4px; display: block; font-family: 'Barlow Condensed', sans-serif; margin-top: 2px; }
+  .nav-right { display: flex; gap: 32px; align-items: center; }
+  .nav-right a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-right a:hover { color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 80px 40px;
+    gap: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Big vertical text watermark */
+  .hero::after {
+    content: 'TWA';
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 260px;
+    color: rgba(0,0,0,0.04);
+    letter-spacing: 20px;
+    pointer-events: none;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--dim);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 10vw, 130px);
+    line-height: 0.92;
+    color: var(--white);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .hero-title .outline {
+    -webkit-text-stroke: 1px rgba(0,0,0,0.25);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 52px);
+    letter-spacing: 4px;
+    color: var(--dim);
+    margin-bottom: 36px;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--silver);
+    max-width: 440px;
+    margin-bottom: 48px;
+    border-left: 2px solid rgba(0,0,0,0.12);
+    padding-left: 20px;
+  }
+
+  /* ── WAITLIST FORM ── */
+  .waitlist-block {
+    background: var(--matte2);
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .waitlist-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent);
+  }
+  .waitlist-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 16px;
+  }
+  .waitlist-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .waitlist-note {
+    font-size: 12px;
+    color: var(--dim);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .input-row {
+    display: flex;
+    gap: 0;
+  }
+  .waitlist-input {
+    flex: 1;
+    background: var(--matte3);
+    border: 1px solid rgba(0,0,0,0.15);
+    border-right: none;
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .waitlist-input::placeholder { color: var(--dim); }
+  .waitlist-input:focus { border-color: rgba(0,0,0,0.35); }
+  .join-btn {
+    background: #111;
+    color: #f5f5f5;
+    border: none;
+    padding: 14px 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    flex-shrink: 0;
+  }
+  .join-btn:hover { background: #333; }
+  .join-btn:active { transform: scale(0.97); }
+
+  .success-msg {
+    display: none;
+    background: rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 14px 18px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: var(--silver2);
+    margin-top: 12px;
+    text-align: center;
+  }
+  .error-msg {
+    display: none;
+    color: #f87171;
+    font-size: 12px;
+    margin-top: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+  }
+  .counter-note {
+    font-size: 11px;
+    color: var(--dim);
+    margin-top: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .counter-note strong { color: var(--silver); }
+
+  /* ── RIGHT HERO VISUAL (can-like column) ── */
+  .hero-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+  }
+
+  .can-visual {
+    width: 220px;
+    background: linear-gradient(170deg, #d8d7d5 0%, #e8e7e4 40%, #dddcda 100%);
+    border-radius: 12px 12px 10px 10px;
+    padding: 40px 30px;
+    border: 1px solid rgba(0,0,0,0.12);
+    position: relative;
+    box-shadow:
+      inset 2px 0 4px rgba(255,255,255,0.6),
+      inset -2px 0 4px rgba(0,0,0,0.08),
+      0 40px 80px rgba(0,0,0,0.2);
+    text-align: center;
+    animation: floatCan 4s ease-in-out infinite;
+  }
+  @keyframes floatCan {
+    0%,100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+  .can-visual::before {
+    content: '';
+    position: absolute;
+    top: 6px; left: 10%; right: 10%;
+    height: 10px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+  }
+  .can-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 74px;
+    line-height: 0.85;
+    color: #111;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .can-brand-sub {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 5px;
+    color: #666;
+    display: block;
+    margin-bottom: 28px;
+  }
+  .can-divider {
+    height: 1px;
+    background: rgba(0,0,0,0.12);
+    margin: 16px 0;
+  }
+  .can-feature {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #222;
+    display: block;
+    margin: 10px 0;
+    line-height: 1.1;
+  }
+  .can-feature small {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #888;
+    font-weight: 400;
+    margin-top: 1px;
+  }
+  .can-caffeine {
+    margin-top: 24px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: #111;
+  }
+  .can-caffeine small {
+    font-size: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    color: #777;
+    letter-spacing: 2px;
+    display: block;
+    margin-top: 2px;
+  }
+  .can-bottom {
+    margin-top: 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: rgba(0,0,0,0.25);
+    text-transform: uppercase;
+  }
+
+  /* ── SPEC STRIP ── */
+  .spec-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+  }
+  .spec-item {
+    padding: 32px 40px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .spec-item:last-child { border-right: none; }
+  .spec-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--white);
+    letter-spacing: 1px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .spec-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .spec-desc {
+    font-size: 12px;
+    color: rgba(200,200,200,0.5);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* ── FEATURES SECTION ── */
+  .section {
+    padding: 80px 40px;
+  }
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 72px);
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 48px;
+    line-height: 1;
+  }
+  .section-heading .outline {
+    -webkit-text-stroke: 1px rgba(0,0,0,0.2);
+    color: transparent;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .feature-card {
+    background: var(--matte);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s;
+  }
+  .feature-card:hover { background: var(--matte2); }
+  .feature-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: 16px; right: 20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: rgba(0,0,0,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .feature-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .feature-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--dim);
+  }
+
+  /* ── VISION BLOCK ── */
+  .vision-block {
+    background: var(--matte2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .vision-quote {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: 2px;
+    color: var(--white);
+    line-height: 1.05;
+  }
+  .vision-quote .dim { color: var(--dim); }
+  .vision-right p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--silver);
+    margin-bottom: 20px;
+  }
+  .vision-right p:last-child { margin-bottom: 0; }
+
+  /* ── STACK SECTION ── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .stack-card {
+    background: var(--matte);
+    padding: 32px;
+    transition: background 0.2s;
+  }
+  .stack-card:hover { background: var(--matte2); }
+  .stack-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 12px;
+  }
+  .stack-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .stack-desc {
+    font-size: 12px;
+    color: rgba(200,200,200,0.45);
+    line-height: 1.5;
+  }
+
+  /* ── BOTTOM CTA ── */
+  .cta-section {
+    padding: 100px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: 'JOIN';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28vw;
+    color: rgba(0,0,0,0.03);
+    letter-spacing: 20px;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .cta-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 20px;
+  }
+  .cta-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 8vw, 110px);
+    letter-spacing: 3px;
+    color: var(--white);
+    line-height: 0.9;
+    margin-bottom: 40px;
+  }
+  .cta-sub {
+    font-size: 14px;
+    color: var(--dim);
+    margin-bottom: 48px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+  .cta-form {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    max-width: 500px;
+    margin: 0 auto 16px;
+  }
+  .cta-input {
+    flex: 1;
+    background: var(--matte3);
+    border: 1px solid rgba(0,0,0,0.15);
+    border-right: none;
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 16px 20px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .cta-input::placeholder { color: var(--dim); }
+  .cta-input:focus { border-color: rgba(0,0,0,0.35); }
+  .cta-join-btn {
+    background: #111;
+    color: #f5f5f5;
+    border: none;
+    padding: 16px 40px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 4px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    flex-shrink: 0;
+  }
+  .cta-join-btn:hover { background: #333; }
+  .cta-join-btn:active { transform: scale(0.97); }
+
+  .cta-success {
+    display: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--silver2);
+    margin-top: 16px;
+  }
+  .cta-error {
+    display: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    color: #f87171;
+    margin-top: 8px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: var(--dim);
+  }
+  .footer-copy {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(136,136,136,0.5);
+    text-transform: uppercase;
+  }
+  .footer-tagline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 40px 20px; }
+    .hero-right { display: none; }
+    .spec-strip { grid-template-columns: 1fr 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .vision-block { grid-template-columns: 1fr; gap: 40px; padding: 60px 20px; }
+    .stack-grid { grid-template-columns: 1fr 1fr; }
+    nav { padding: 20px; }
+    .nav-right { display: none; }
+    .section { padding: 60px 20px; }
+    .spec-item { padding: 24px 20px; }
+    .status-bar { padding: 8px 20px; }
+    footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    .cta-section { padding: 60px 20px; }
+    .cta-form { flex-direction: column; }
+    .cta-input, .cta-join-btn { width: 100%; border-right: 1px solid rgba(255,255,255,0.12); }
+    .cta-join-btn { border-top: none; }
+    .input-row { flex-direction: column; }
+    .waitlist-input { border-right: 1px solid rgba(255,255,255,0.12); }
+    .join-btn { border-top: none; }
+  }
+
+  /* ── FADE-IN ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.22s; }
+  .fade-up:nth-child(3) { animation-delay: 0.34s; }
+  .fade-up:nth-child(4) { animation-delay: 0.46s; }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- STATUS BAR -->
+<div class="status-bar">
+  <span>THE WHOLE ATTITUDE // DIGITAL PLATFORM</span>
+  <span class="live">WAITLIST NOW OPEN</span>
+  <span>AI-POWERED // HIP-HOP // WEB</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    THE WHOLE ATTITUDE
+    <span></span>
+  </div>
+  <div class="nav-right">
+    <a href="#features">Features</a>
+    <a href="#vision">Vision</a>
+    <a href="#stack">Stack</a>
+    <a href="#join">Join</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow fade-up">Launching Soon — Invite Only</p>
+    <h1 class="hero-title fade-up">
+      THE<br>
+      <span class="outline">WHOLE</span><br>
+      ATTITUDE
+    </h1>
+    <p class="hero-sub fade-up"></p>
+    <p class="hero-desc fade-up">
+      The subscription-grade digital platform fusing hip-hop culture, curated music video experiences, and AI-powered web technology — built for those who move different.
+    </p>
+
+    <!-- WAITLIST FORM -->
+    <div class="waitlist-block fade-up" id="hero-waitlist">
+      <div class="waitlist-label">// Exclusive Access</div>
+      <div class="waitlist-title">Secure Your Spot</div>
+      <div class="waitlist-note">No noise. Just pure curated culture on demand. Drop your email — we'll hit you when the doors open.</div>
+      <div class="input-row">
+        <input class="waitlist-input" id="hero-email" type="email" placeholder="YOUR EMAIL ADDRESS" autocomplete="email"/>
+        <button class="join-btn" onclick="handleHeroJoin()">JOIN</button>
+      </div>
+      <div class="error-msg" id="hero-error">Please enter a valid email address.</div>
+      <div class="success-msg" id="hero-success">✓ YOU'RE ON THE LIST. WE'LL BE IN TOUCH.</div>
+      <div class="counter-note" id="hero-counter">// <strong id="hero-count">—</strong> spots claimed</div>
+    </div>
+  </div>
+
+  <!-- CAN VISUAL -->
+  <div class="hero-right">
+    <div class="can-visual">
+      <div class="can-brand">TWA</div>
+      <span class="can-brand-sub">ATTITUDE</span>
+      <div class="can-divider"></div>
+      <span class="can-feature">
+        AI POWERED
+        <small>DIGITAL PRODUCTS</small>
+      </span>
+      <div class="can-divider"></div>
+      <span class="can-feature">
+        ZERO LIMITS
+        <small>SUBSCRIPTION ACCESS</small>
+      </span>
+      <div class="can-divider"></div>
+      <span class="can-feature">
+        
+        <small>HIP-HOP CULTURE</small>
+      </span>
+      <div class="can-divider"></div>
+      <div class="can-caffeine">
+        100%
+        <small>CURATED CONTENT</small>
+      </div>
+      <div class="can-bottom">You Tube — Digital Edition</div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEC STRIP -->
+<div class="spec-strip">
+  <div class="spec-item">
+    <div class="spec-num">01</div>
+    <div class="spec-label">Platform</div>
+    <div class="spec-desc">Next.js + React — production-grade frontend with zero compromise.</div>
+  </div>
+  <div class="spec-item">
+    <div class="spec-num">∞</div>
+    <div class="spec-label">Music Videos</div>
+    <div class="spec-desc">YouTube API-curated hip-hop playlists, no ads, no noise.</div>
+  </div>
+  <div class="spec-item">
+    <div class="spec-num">0</div>
+    <div class="spec-label">Gatekeeping</div>
+    <div class="spec-desc">Authenticated access built on Supabase — your data, protected.</div>
+  </div>
+  <div class="spec-item">
+    <div class="spec-num">AI</div>
+    <div class="spec-label">Powered</div>
+    <div class="spec-desc">Intelligent curation and expandable API ecosystem.</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-eyebrow">Core Features</div>
+  <h2 class="section-heading">BUILT <span class="outline">DIFFERENT</span></h2>
+  <div class="features-grid">
+    <div class="feature-card" data-num="01">
+      <span class="feature-icon">🎬</span>
+      <div class="feature-title">Curated Music Video Access</div>
+      <div class="feature-body">Authenticated subscribers unlock an endless stream of hip-hop and rap music videos pulled from premium YouTube playlists — curated, not algorithmic. Culture-first, always.</div>
+    </div>
+    <div class="feature-card" data-num="02">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-title">AI-Powered Digital Products</div>
+      <div class="feature-body">We sell intelligent web products engineered to perform — websites, platforms, and digital tools built with cutting-edge AI stacks that let your business operate on a different level.</div>
+    </div>
+    <div class="feature-card" data-num="03">
+      <span class="feature-icon">🔐</span>
+      <div class="feature-title">Subscription-Grade Security</div>
+      <div class="feature-body">Powered by Supabase Auth, Database, and Edge Functions — enterprise-level security and access control without the enterprise price tag.</div>
+    </div>
+    <div class="feature-card" data-num="04">
+      <span class="feature-icon">🌐</span>
+      <div class="feature-title">Expandable API Ecosystem</div>
+      <div class="feature-body">The YouTube Data API is just the beginning. The platform is architected to integrate additional data sources and APIs — built to scale with the culture.</div>
+    </div>
+    <div class="feature-card" data-num="05">
+      <span class="feature-icon">🛠</span>
+      <div class="feature-title">Production-Ready Architecture</div>
+      <div class="feature-body">Next.js preferred stack, Supabase backend, React frontend. Every layer built for real-world performance — not demos, not MVPs. Fully production-ready from day one.</div>
+    </div>
+    <div class="feature-card" data-num="06">
+      <span class="feature-icon">🎯</span>
+      <div class="feature-title">Invite-Only Launch</div>
+      <div class="feature-body">The Whole Attitude is not for everybody. The waitlist is the gate. Get in early, get in right — founding members set the tone for the entire community.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<div class="vision-block" id="vision">
+  <div class="vision-quote">
+    WHERE HIP-HOP<br>
+    <span class="dim">MEETS</span><br>
+    WEB3 GRADE<br>
+    <span class="dim">TECHNOLOGY</span>
+  </div>
+  <div class="vision-right">
+    <p>The Whole Attitude is a subscription-based web platform built at the intersection of hip-hop culture and next-generation AI web technology. This isn't a music blog. This isn't a playlist app. This is a curated digital experience subscription — where authenticated users access premium content powered by intelligent infrastructure.</p>
+    <p>Our AI-powered digital website products are engineered for businesses and creators who want web presence that moves with the same energy as the culture they represent. Every product we build carries the same standard: production-ready, scalable, and built for real impact.</p>
+    <p>The waitlist is open now. When those doors open, the platform opens with them — zero sugar, no artificial hype. Just the whole attitude.</p>
+  </div>
+</div>
+
+<!-- STACK -->
+<section class="section" id="stack">
+  <div class="section-eyebrow">Technology Stack</div>
+  <h2 class="section-heading">BUILT ON <span class="outline">FACTS</span></h2>
+  <div class="stack-grid">
+    <div class="stack-card">
+      <div class="stack-tag">// Frontend</div>
+      <div class="stack-name">Next.js + React</div>
+      <div class="stack-desc">Server-side rendering, optimized performance, and a component architecture that scales without friction.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-tag">// Backend</div>
+      <div class="stack-name">Supabase</div>
+      <div class="stack-desc">Auth, database, storage, and edge functions in one unified backend platform. Open source. Enterprise grade.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-tag">// Content API</div>
+      <div class="stack-name">YouTube Data API</div>
+      <div class="stack-desc">Initial content layer pulling curated hip-hop playlists with room to expand into additional content pipelines.</div>
+    </div>
+    <div class="stack-card">
+      <div class="stack-tag">// Intelligence</div>
+      <div class="stack-name">AI Layer</div>
+      <div class="stack-desc">Expandable AI integration layer — intelligent curation, content recommendation, and automated digital product generation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="cta-section" id="join">
+  <div class="cta-eyebrow">// The Wait is Almost Over</div>
+  <h2 class="cta-heading">
+    GET<br>
+    <span style="-webkit-text-stroke:1px rgba(0,0,0,0.2);color:transparent">READY</span>
+  </h2>
+  <p class="cta-sub">The platform launches invite-only. Founding members get early access, founding pricing, and a seat at the table when culture meets technology.</p>
+  <div class="cta-form">
+    <input class="cta-input" id="cta-email" type="email" placeholder="YOUR EMAIL ADDRESS" autocomplete="email"/>
+    <button class="cta-join-btn" onclick="handleCtaJoin()">JOIN</button>
+  </div>
+  <div class="cta-error" id="cta-error">Please enter a valid email address.</div>
+  <div class="cta-success" id="cta-success">✓ YOU'RE IN. THE WHOLE ATTITUDE IS COMING.</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"></div>
+  <div class="footer-copy">© 2026 The Whole Attitude. All rights reserved.</div>
+  <div class="footer-tagline">Energy Evolved // Digital Products</div>
+</footer>
+
+<!-- ── SCRIPTS ── -->
+<script>
+// ── SUPABASE CONFIG ──
+const SUPABASE_URL = 'https://nodsfweodgxoyqkslkgu.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vZHNmd2VvZGd4b3lxa3Nsa2d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzMjM2MTgsImV4cCI6MjA4NTg5OTYxOH0.IzkLC5KKS3pdYevwTKiBIn-gowz3ruYr1BFRw_IrORQ';
+
+// ── HELPERS ──
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+async function saveEmailToSupabase(email) {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({
+      email: email.trim().toLowerCase(),
+      joined_at: new Date().toISOString(),
+      source: 'landing_page'
+    })
+  });
+
+  if (response.status === 409) {
+    // Duplicate email — unique constraint triggered
+    return { success: true, duplicate: true };
+  }
+
+  if (!response.ok) {
+    const err = await response.text();
+    console.error('Supabase error:', err);
+    return { success: false };
+  }
+
+  return { success: true, duplicate: false };
+}
+
+async function getWaitlistCount() {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/waitlist?select=id`, {
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Prefer': 'count=exact'
+    }
+  });
+  const count = response.headers.get('content-range');
+  if (count) {
+    const total = count.split('/')[1];
+    return total !== '*' ? parseInt(total) : null;
+  }
+  return null;
+}
+
+async function updateCounters() {
+  const count = await getWaitlistCount();
+  const el = document.getElementById('hero-count');
+  if (el) el.textContent = count !== null && count > 0 ? count : '—';
+}
+
+// ── SHARED SUBMIT HANDLER ──
+async function handleJoin(inputId, errorId, successId, btnSelector) {
+  const input   = document.getElementById(inputId);
+  const error   = document.getElementById(errorId);
+  const success = document.getElementById(successId);
+  const btn     = document.querySelector(btnSelector);
+
+  error.style.display = 'none';
+  success.style.display = 'none';
+
+  if (!isValidEmail(input.value)) {
+    error.style.display = 'block';
+    input.focus();
+    return;
+  }
+
+  // Disable button while saving
+  btn.textContent = '...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  const result = await saveEmailToSupabase(input.value);
+
+  btn.disabled = false;
+  btn.style.opacity = '1';
+
+  if (result.success) {
+    btn.textContent = '✓';
+    btn.style.background = '#444';
+    btn.style.color = '#f5f5f5';
+
+    if (result.duplicate) {
+      success.textContent = '✓ YOU\'RE ALREADY ON THE LIST. WE GOT YOU.';
+    } else {
+      success.textContent = inputId === 'hero-email'
+        ? '✓ YOU\'RE ON THE LIST. WE\'LL BE IN TOUCH.'
+        : '✓ YOU\'RE IN. THE WHOLE ATTITUDE IS COMING.';
+      updateCounters();
+    }
+    success.style.display = 'block';
+    input.value = '';
+  } else {
+    error.textContent = 'Something went wrong. Please try again.';
+    error.style.display = 'block';
+    btn.textContent = 'JOIN';
+  }
+}
+
+// ── HERO FORM ──
+function handleHeroJoin() {
+  handleJoin('hero-email', 'hero-error', 'hero-success', '.join-btn');
+}
+
+// ── CTA FORM ──
+function handleCtaJoin() {
+  handleJoin('cta-email', 'cta-error', 'cta-success', '.cta-join-btn');
+}
+
+// ── ENTER KEY SUPPORT ──
+document.getElementById('hero-email').addEventListener('keydown', e => {
+  if (e.key === 'Enter') handleHeroJoin();
+});
+document.getElementById('cta-email').addEventListener('keydown', e => {
+  if (e.key === 'Enter') handleCtaJoin();
+});
+
+// ── INIT — load real count on page load ──
+updateCounters();
+</script>
+</body>
+</html>
