@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 import styles from './LandingPage.module.css';
 
-{/*// ── DATA ──────────────────────────────────────────────────────────────────────*/}
+
 
 const FEATURES = [
   {
@@ -130,7 +130,7 @@ function WaitlistForm({ variant }) {
     );
   }
 
-  {/* Hero variant*/}
+  
   return (
     <div className={styles.waitlistBlock}>
       <div className={styles.waitlistLabel}>// Exclusive Access</div>
@@ -170,7 +170,7 @@ function WaitlistForm({ variant }) {
   );
 }
 
-{/*// ── MAIN COMPONENT ────────────────────────────────────────────────────────────*/}
+
 
 export default function LandingPage() {
   const [waitlistCount, setWaitlistCount] = useState(null);
@@ -234,7 +234,7 @@ export default function LandingPage() {
           )}
         </div>
 
-        {/* CAN VISUAL */}
+    
         <div className={styles.heroRight}>
           <div className={styles.canVisual}>
             <div className={styles.canBrand}>TWA</div>
@@ -264,7 +264,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── SPEC STRIP ── */}
+    
       <div className={styles.specStrip}>
         {[
           { num: '01', label: 'Platform',      desc: 'Next.js + React — production-grade frontend with zero compromise.' },
@@ -280,7 +280,6 @@ export default function LandingPage() {
         ))}
       </div>
 
-      {/* ── FEATURES ── */}
       <section className={styles.section} id="features">
         <div className={styles.sectionEyebrow}>Core Features</div>
         <h2 className={styles.sectionHeading}>
@@ -298,7 +297,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── VISION ── */}
+      
       <div className={styles.visionBlock} id="vision">
         <div className={styles.visionQuote}>
           WHERE HIP-HOP<br />
@@ -326,7 +325,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* ── STACK ── */}
+  
       <section className={styles.section} id="stack">
         <div className={styles.sectionEyebrow}>Technology Stack</div>
         <h2 className={styles.sectionHeading}>
@@ -359,7 +358,7 @@ export default function LandingPage() {
         <WaitlistForm variant="cta" />
       </section>
 
-      {/* ── FOOTER ── */}
+  
       <footer className={styles.footer}>
         <div className={styles.footerLogo}>TWA</div>
         <div className={styles.footerCopy}>© 2026 The Whole Attitude. All rights reserved.</div>
