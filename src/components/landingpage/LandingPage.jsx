@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 import styles from './LandingPage.module.css';
 
-// ── DATA ──────────────────────────────────────────────────────────────────────
+{/*// ── DATA ──────────────────────────────────────────────────────────────────────*/}
 
 const FEATURES = [
   {
@@ -55,7 +55,7 @@ const STACK = [
   { tag: '// Intelligence',name: 'AI Layer',           desc: 'Expandable AI integration layer — intelligent curation, content recommendation, and automated digital product generation.' },
 ];
 
-// ── WAITLIST FORM (reusable sub-component) ────────────────────────────────────
+{/*// ── WAITLIST FORM (reusable sub-component) ────────────────────────────────────*/}
 
 function WaitlistForm({ variant }) {
   const isCta = variant === 'cta';
@@ -130,7 +130,7 @@ function WaitlistForm({ variant }) {
     );
   }
 
-  // Hero variant
+  {/* Hero variant*/}
   return (
     <div className={styles.waitlistBlock}>
       <div className={styles.waitlistLabel}>// Exclusive Access</div>
@@ -170,7 +170,7 @@ function WaitlistForm({ variant }) {
   );
 }
 
-// ── MAIN COMPONENT ────────────────────────────────────────────────────────────
+{/*// ── MAIN COMPONENT ────────────────────────────────────────────────────────────*/}
 
 export default function LandingPage() {
   const [waitlistCount, setWaitlistCount] = useState(null);
