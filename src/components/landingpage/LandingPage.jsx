@@ -130,7 +130,7 @@ function WaitlistForm({ variant }) {
     );
   }
 
-  // Hero variant
+{/*// Hero variant*/}
   return (
     <div className={styles.waitlistBlock}>
       <div className={styles.waitlistLabel}>// Exclusive Access</div>
